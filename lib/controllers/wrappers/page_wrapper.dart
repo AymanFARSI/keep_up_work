@@ -17,30 +17,54 @@ class BasePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        body: Container(
-          width: MediaQuery.of(context).size.width,
-          height: MediaQuery.of(context).size.height,
-          padding: const EdgeInsets.all(16),
-          child: SingleChildScrollView(
+        body: SingleChildScrollView(
+          child: SizedBox(
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Container(
                   height: kToolbarHeight,
                   decoration: const BoxDecoration(
+                    color: Colors.lightBlueAccent,
                     borderRadius: BorderRadius.only(
-                      bottomRight: Radius.circular(16),
-                      bottomLeft: Radius.circular(16),
+                      bottomRight: Radius.circular(25),
+                      bottomLeft: Radius.circular(25),
                     ),
                   ),
-                  child: AppBar(
-                    title: Text(title),
-                    leading: leading,
-                    actions: actions,
-                    centerTitle: true,
+                  child: Stack(
+                    children: <Widget>[
+                      if (leading != null)
+                        Positioned(
+                          left: 7.0,
+                          top: 7.0,
+                          child: leading!,
+                        ),
+                      Center(
+                        child: Text(
+                          title,
+                          style: const TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                      if (actions != null)
+                        Positioned(
+                          right: 7.0,
+                          top: 7.0,
+                          child: Row(
+                            children: actions!,
+                          ),
+                        ),
+                    ],
                   ),
                 ),
-                Expanded(child: child),
+                Expanded(child: Padding(
+                  padding: const EdgeInsets.all(9.0),
+                  child: child,
+                )),
               ],
             ),
           ),

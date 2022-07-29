@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:keep_up_work/controllers/routing/routes.dart';
 import 'package:keep_up_work/controllers/wrappers/page_wrapper.dart';
 
 class ProgressPage extends StatelessWidget {
@@ -6,13 +8,21 @@ class ProgressPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return  BasePage(
+    return BasePage(
       title: 'Progress',
       leading: IconButton(
         icon: const Icon(Icons.menu_rounded),
         onPressed: () {},
       ),
-      child: const Text('Progress'),
+      child: ElevatedButton(
+        onPressed: () {
+          context.goNamed(
+            MyRoutes.DETAILS.name,
+            params: {'id': '1999'},
+          );
+        },
+        child: const Text('Details'),
+      ),
     );
   }
 }
