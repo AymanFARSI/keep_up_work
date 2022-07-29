@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 import 'package:keep_up_work/controllers/routing/routes.dart';
 import 'package:keep_up_work/init_app.dart';
 import 'package:keep_up_work/views/details_page/details_page.dart';
 import 'package:keep_up_work/views/error_page/error_page.dart';
+import 'package:keep_up_work/views/progress_page/add_steps_progress.dart';
+import 'package:keep_up_work/views/progress_page/add_value_progress.dart';
 import 'package:keep_up_work/views/progress_page/progress_page.dart';
 
 main() async {
@@ -33,6 +36,16 @@ class MyApp extends StatelessWidget {
               id: int.parse(state.params['id']!),
             ),
           ),
+          GoRoute(
+            name: MyRoutes.ADD_VALUE_PROGRESS.name,
+            path: MyRoutes.ADD_VALUE_PROGRESS.path,
+            builder: (context, state) => const AddValueProgress(),
+          ),
+          GoRoute(
+            name: MyRoutes.ADD_STEPS_PROGRESS.name,
+            path: MyRoutes.ADD_STEPS_PROGRESS.path,
+            builder: (context, state) => const AddStepsProgress(),
+          ),
         ],
       ),
       GoRoute(
@@ -49,7 +62,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp.router(
+    return GetMaterialApp.router(
       title: 'Keep Up Work',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(

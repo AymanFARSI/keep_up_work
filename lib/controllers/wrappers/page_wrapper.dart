@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class BasePage extends StatelessWidget {
   final String title;
@@ -19,8 +20,8 @@ class BasePage extends StatelessWidget {
       child: Scaffold(
         body: SingleChildScrollView(
           child: SizedBox(
-            width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height,
+            width: Get.width,
+            height: Get.height,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
@@ -61,10 +62,7 @@ class BasePage extends StatelessWidget {
                     ],
                   ),
                 ),
-                Expanded(child: Padding(
-                  padding: const EdgeInsets.all(9.0),
-                  child: child,
-                )),
+                child,
               ],
             ),
           ),
