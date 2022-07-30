@@ -10,4 +10,5 @@ initApp() async {
 initDatabase() async {
   dbLayer = DBLayer();
   await dbLayer.init();
+
 }

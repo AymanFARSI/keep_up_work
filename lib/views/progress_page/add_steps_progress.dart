@@ -17,7 +17,7 @@ class _AddStepsProgressState extends State<AddStepsProgress> {
       leading: IconButton(
         icon: const Icon(Icons.arrow_back),
         onPressed: () {
-          context.pop();
+          Navigator.pop(context);
         },
       ),
       actions: [

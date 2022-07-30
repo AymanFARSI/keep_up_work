@@ -149,10 +149,7 @@ class _ProgressPageState extends State<ProgressPage> {
                   ElevatedButton(
                     onPressed: () {
                       Navigator.of(context).pop();
-                      context.goNamed(
-                        MyRoutes.DETAILS.name,
-                        params: {'id': '1999'},
-                      );
+                      context.goNamed(MyRoutes.ADD_VALUE_PROGRESS.name);
                     },
                     child: const Text('Value Progress'),
                   ),
@@ -160,6 +157,7 @@ class _ProgressPageState extends State<ProgressPage> {
                   ElevatedButton(
                     onPressed: () {
                       Navigator.of(context).pop();
+                      context.goNamed(MyRoutes.ADD_STEPS_PROGRESS.name);
                     },
                     child: const Text('Steps Progress'),
                   ),
@@ -185,10 +183,8 @@ class _ProgressPageState extends State<ProgressPage> {
           icon: const Icon(Icons.lightbulb_circle),
         ),
       ],
-      child: Container(
+      child: Padding(
         padding: const EdgeInsets.all(9.0),
-        width: Get.width,
-        height: Get.height - kToolbarHeight,
         child: Column(
           children: [
             Container(

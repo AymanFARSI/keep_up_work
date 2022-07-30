@@ -12,7 +12,9 @@ class ErrorPage extends StatelessWidget {
       title: 'Error',
       leading: IconButton(
         icon: const Icon(Icons.arrow_back_rounded),
-        onPressed: () {},
+        onPressed: () {
+          context.pop();
+        },
       ),
       child: Center(
         child: Text(

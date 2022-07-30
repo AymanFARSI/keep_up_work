@@ -8,6 +8,8 @@ import 'package:keep_up_work/src/database/app_database.dart';
 import 'package:keep_up_work/src/variables/var_database.dart';
 import 'package:keep_up_work/src/variables/var_progress.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:sqlite3/sqlite3.dart';
+import 'package:flutter/material.dart' show Color;
 
 class DBLayer {
   final AppDatabase _db = AppDatabase();
@@ -22,15 +24,47 @@ class DBLayer {
   }
 
   void _initVariables() {
-    listOfValueProgress = _db.getAllValueProgresses() ?? RxList<ValueProgress>();
-    listOfStepsProgress = _db.getAllStepsProgresses() ?? RxList<StepsProgress>();
-    currentProgressId = _db.getCurrentProgressId() ;
+    listOfValueProgress = RxList<ValueProgress>();
+    ResultSet resultSet = _db.getAllValueProgresses();
+    for (Row row in resultSet) {
+      ValueProgress valueProgress = ValueProgress(
+        id: row['id'],
+        name: row['name'],
+        title: row['title'],
+        totalValue: row['total_value'],
+        currentValue: row['current_value'],
+        dateCreated: DateTime.parse(row['date_created']),
+        displayColor: Color(
+          int.parse(row['display_color'].split('(').last.split(')').first),
+        ),
+        goal: row['goal'],
+        isCompleted: row['is_completed'] == 1,
+        note: row['note'],
+      );
+      listOfValueProgress.add(valueProgress);
+    }
+    listOfStepsProgress = RxList<StepsProgress>();
+    resultSet = _db.getAllStepsProgresses();
+    for (Row row in resultSet) {
+      StepsProgress stepsProgress = StepsProgress(
+        id: int.parse(row['id']),
+        title: row['title'],
+        steps: RxList<StepModel>(),
+        dateCreated: DateTime.parse(row['date_created']),
+        displayColor: row['display_color'],
+        goal: row['goal'],
+        isCompleted: row['is_completed'] == '1',
+        note: row['note'],
+      );
+      listOfStepsProgress.add(stepsProgress);
+    }
+    currentProgressId = _db.getCurrentProgressId();
     currentStepId = _db.getCurrentStepId();
     currentValueProgressId = _db.getCurrentValueProgressId();
     currentStepsProgressId = _db.getCurrentStepProgressId();
   }
 
-  Future<void> insertValueProgress(ValueProgress valueProgress) async {
+  Future<void> addValueProgress(ValueProgress valueProgress) async {
     await _db.openDatabase('${_appDocDir.path}/keep_up_work.db');
     await _db.insertProgress(
       id: valueProgress.progressId,
@@ -51,7 +85,7 @@ class DBLayer {
     _db.closeDatabase();
   }
 
-  Future<void> insertStepProgress(StepsProgress stepsProgress) async {
+  Future<void> addStepsProgress(StepsProgress stepsProgress) async {
     await _db.openDatabase('${_appDocDir.path}/keep_up_work.db');
     await _db.insertProgress(
       id: stepsProgress.progressId,

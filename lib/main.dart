@@ -30,13 +30,6 @@ class MyApp extends StatelessWidget {
         builder: (context, state) => const ProgressPage(),
         routes: [
           GoRoute(
-            name: MyRoutes.DETAILS.name,
-            path: MyRoutes.DETAILS.path,
-            builder: (context, state) => DetailsPage(
-              id: int.parse(state.params['id']!),
-            ),
-          ),
-          GoRoute(
             name: MyRoutes.ADD_VALUE_PROGRESS.name,
             path: MyRoutes.ADD_VALUE_PROGRESS.path,
             builder: (context, state) => const AddValueProgress(),
@@ -45,6 +38,13 @@ class MyApp extends StatelessWidget {
             name: MyRoutes.ADD_STEPS_PROGRESS.name,
             path: MyRoutes.ADD_STEPS_PROGRESS.path,
             builder: (context, state) => const AddStepsProgress(),
+          ),
+          GoRoute(
+            name: MyRoutes.DETAILS.name,
+            path: MyRoutes.DETAILS.path,
+            builder: (context, state) => DetailsPage(
+              id: int.parse(state.params['id']!),
+            ),
           ),
         ],
       ),

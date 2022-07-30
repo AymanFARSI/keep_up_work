@@ -135,13 +135,13 @@ class AppDatabase {
   }
 
   getAllValueProgresses() {
-    return _db.execute(
+    return _db.select(
       'SELECT * FROM progress INNER JOIN value_progress ON progress.id = value_progress.progress_id',
     );
   }
 
   getAllStepsProgresses() {
-    return _db.execute(
+    return _db.select(
       'SELECT * FROM progress INNER JOIN steps_progress ON progress.id = steps_progress.progress_id INNER JOIN step ON steps_progress.progress_id = step.step_id',
     );
   }
