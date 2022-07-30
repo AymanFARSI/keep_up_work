@@ -1,4 +1,3 @@
-import 'package:keep_up_work/models/progress_model.dart';
 import 'package:sqlite3/sqlite3.dart';
 
 class AppDatabase {
@@ -38,8 +37,7 @@ class AppDatabase {
   ''');
     _db.execute('''
     CREATE TABLE IF NOT EXISTS step (
-      step_id INTEGER NOT NULL PRIMARY KEY,
-      progress_id INTEGER NOT NULL REFERENCES steps_progress(progress_id),
+      progress_id INTEGER NOT NULL PRIMARY KEY REFERENCES steps_progress(progress_id),
       label TEXT NOT NULL,
       value INTEGER NOT NULL,
       is_done INTEGER NOT NULL
@@ -119,14 +117,12 @@ class AppDatabase {
   }) {
     _db.execute('''
     INSERT INTO step (
-      step_id,
       progress_id,
       label,
       value,
       is_done
     ) VALUES (?, ?, ?, ?)
     ''', [
-      stepId,
       progressId,
       label,
       value,
@@ -142,7 +138,16 @@ class AppDatabase {
 
   getAllStepsProgresses() {
     return _db.select(
-      'SELECT * FROM progress INNER JOIN steps_progress ON progress.id = steps_progress.progress_id INNER JOIN step ON steps_progress.progress_id = step.step_id',
+      'SELECT * FROM progress INNER JOIN steps_progress ON progress.id = steps_progress.progress_id',
+    );
+  }
+
+  getAllSteps({
+    required int progressId,
+  }) {
+    return _db.select(
+      'SELECT * FROM step WHERE progress_id = ?',
+      [progressId],
     );
   }
 
@@ -157,9 +162,9 @@ class AppDatabase {
   int getCurrentStepId() {
     ResultSet results = _db
       .select(
-        'SELECT step_id FROM step ORDER BY step_id DESC LIMIT 1',
+        'SELECT progress_id FROM step ORDER BY progress_id DESC LIMIT 1',
       );
-    return results.isEmpty ? 0 : results.first['step_id'];
+    return results.isEmpty ? 0 : results.first['progress_id'];
   }
 
   int getCurrentValueProgressId() {
@@ -253,13 +258,12 @@ class AppDatabase {
       label = ?,
       value = ?,
       is_done = ?
-    WHERE step_id = ?
+    WHERE progress_id = ?
     ''', [
       progressId,
       label,
       value,
       isDone,
-      stepId,
     ]);
   }
 

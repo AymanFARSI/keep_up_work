@@ -47,21 +47,31 @@ class DBLayer {
     resultSet = _db.getAllStepsProgresses();
     for (Row row in resultSet) {
       StepsProgress stepsProgress = StepsProgress(
-        id: int.parse(row['id']),
+        id: row['id'],
         title: row['title'],
         steps: RxList<StepModel>(),
         dateCreated: DateTime.parse(row['date_created']),
-        displayColor: row['display_color'],
+        displayColor: Color(
+          int.parse(row['display_color'].split('(').last.split(')').first),
+        ),
         goal: row['goal'],
-        isCompleted: row['is_completed'] == '1',
+        isCompleted: row['is_completed'] == 1,
         note: row['note'],
       );
+      ResultSet stepsResultSet =
+          _db.getAllSteps(progressId: stepsProgress.progressId);
+      for (Row stepRow in stepsResultSet) {
+        StepModel step = StepModel(
+          progressId: stepRow['progress_id'],
+          label: stepRow['label'],
+          value: stepRow['value'],
+          isDone: stepRow['is_done'] == 1,
+        );
+        stepsProgress.steps.add(step);
+      }
       listOfStepsProgress.add(stepsProgress);
     }
     currentProgressId = _db.getCurrentProgressId();
-    currentStepId = _db.getCurrentStepId();
-    currentValueProgressId = _db.getCurrentValueProgressId();
-    currentStepsProgressId = _db.getCurrentStepProgressId();
   }
 
   Future<void> addValueProgress(ValueProgress valueProgress) async {
@@ -101,7 +111,7 @@ class DBLayer {
     );
     for (StepModel step in stepsProgress.steps) {
       await _db.insertStep(
-        stepId: step.stepId,
+        stepId: step.progressId,
         progressId: stepsProgress.progressId,
         label: step.label,
         value: step.value,
@@ -148,7 +158,7 @@ class DBLayer {
     );
     for (StepModel step in progress.steps) {
       await _db.updateStep(
-        stepId: step.stepId,
+        stepId: step.progressId,
         progressId: progress.progressId,
         label: step.label,
         value: step.value,

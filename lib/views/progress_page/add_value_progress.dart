@@ -160,7 +160,7 @@ class _AddValueProgressState extends State<AddValueProgress> {
       child: Padding(
         padding: const EdgeInsets.all(9.0),
         child: ListView(
-          physics: const NeverScrollableScrollPhysics(),
+          physics: const BouncingScrollPhysics(),
           children: [
             _buildInputField(
               label: 'Title',
@@ -287,7 +287,7 @@ class _AddValueProgressState extends State<AddValueProgress> {
                     );
                   } else {
                     ValueProgress progress = ValueProgress(
-                      id: currentValueProgressId++,
+                      id: currentProgressId++,
                       title: _titleController.text,
                       goal: _goalController.text,
                       note: _noteController.text,

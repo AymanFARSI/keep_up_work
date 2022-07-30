@@ -2,7 +2,6 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
-import 'package:go_router/go_router.dart';
 import 'package:keep_up_work/controllers/routing/routes.dart';
 import 'package:keep_up_work/controllers/wrappers/page_wrapper.dart';
 import 'package:keep_up_work/models/steps_progress.dart';
