@@ -263,6 +263,7 @@ class _AddStepsProgressState extends State<AddStepsProgress> {
                         builder: (BuildContext context) {
                           return AlertDialog(
                             title: const Text('Add Step'),
+                            elevation: 5,
                             content: Column(
                               mainAxisSize: MainAxisSize.min,
                               children: [

@@ -37,10 +37,11 @@ class AppDatabase {
   ''');
     _db.execute('''
     CREATE TABLE IF NOT EXISTS step (
-      progress_id INTEGER NOT NULL PRIMARY KEY REFERENCES steps_progress(progress_id),
+      progress_id INTEGER NOT NULL REFERENCES steps_progress(progress_id),
       label TEXT NOT NULL,
       value INTEGER NOT NULL,
-      is_done INTEGER NOT NULL
+      is_done INTEGER NOT NULL,
+      PRIMARY KEY (progress_id, label, value)
     );
   ''');
   }
@@ -156,7 +157,7 @@ class AppDatabase {
       .select(
         'SELECT id FROM progress ORDER BY id DESC LIMIT 1',
       );
-    return results.isEmpty ? 0 : results.first['id'];
+    return results.isEmpty ? 0 : results.first['id'] + 1;
   }
 
   int getCurrentStepId() {
