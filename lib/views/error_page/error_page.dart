@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:keep_up_work/controllers/routing/routes.dart';
 import 'package:keep_up_work/controllers/wrappers/page_wrapper.dart';
 
 class ErrorPage extends StatelessWidget {
-  final GoRouterState state;
-  const ErrorPage({Key? key, required this.state}) : super(key: key);
+  final GoRouterState? state;
+  final String? message;
+  const ErrorPage({Key? key, this.state, this.message}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -13,12 +15,12 @@ class ErrorPage extends StatelessWidget {
       leading: IconButton(
         icon: const Icon(Icons.arrow_back_rounded),
         onPressed: () {
-          context.pop();
+          context.goNamed(MyRoutes.PROGRESS.name);
         },
       ),
       child: Center(
         child: Text(
-          state.error.toString(),
+          state == null ? message ?? 'Unknown Error' : state!.error.toString(),
           textAlign: TextAlign.center,
         ),
       ),

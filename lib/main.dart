@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:keep_up_work/controllers/routing/routes.dart';
 import 'package:keep_up_work/init_app.dart';
 import 'package:keep_up_work/views/details_page/details_page.dart';
+import 'package:keep_up_work/views/edit_page/edit_page.dart';
 import 'package:keep_up_work/views/error_page/error_page.dart';
 import 'package:keep_up_work/views/progress_page/add_steps_progress.dart';
 import 'package:keep_up_work/views/progress_page/add_value_progress.dart';
@@ -44,7 +45,18 @@ class MyApp extends StatelessWidget {
             path: MyRoutes.DETAILS.path,
             builder: (context, state) => DetailsPage(
               id: int.parse(state.params['id']!),
+              type: state.params['type']!,
             ),
+            routes: [
+              GoRoute(
+                name: MyRoutes.EDIT.name,
+                path: MyRoutes.EDIT.path,
+                builder: (context, state) => EditPage(
+                  id: int.parse(state.params['id']!),
+                  type: state.params['type']!,
+                ),
+              ),
+            ],
           ),
         ],
       ),

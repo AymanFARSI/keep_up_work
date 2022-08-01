@@ -4,13 +4,15 @@ enum MyRoutes {
   PROGRESS,
   DETAILS,
   ADD_VALUE_PROGRESS,
-  ADD_STEPS_PROGRESS;
+  ADD_STEPS_PROGRESS,
+  EDIT;
 
   static const Map<MyRoutes, String> paths = {
     PROGRESS: '/progress',
-    DETAILS: ':id',
+    DETAILS: 'details/:type/:id',
     ADD_VALUE_PROGRESS: 'add_value_progress',
     ADD_STEPS_PROGRESS: 'add_steps_progress',
+    EDIT: 'edit',
   };
 
   String get name {
@@ -23,6 +25,8 @@ enum MyRoutes {
         return 'add_value_progress';
       case ADD_STEPS_PROGRESS:
         return 'add_steps_progress';
+      case EDIT:
+        return 'edit';
     }
   }
 
