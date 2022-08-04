@@ -153,34 +153,30 @@ class AppDatabase {
   }
 
   int getCurrentProgressId() {
-    ResultSet results = _db
-      .select(
-        'SELECT id FROM progress ORDER BY id DESC LIMIT 1',
-      );
+    ResultSet results = _db.select(
+      'SELECT id FROM progress ORDER BY id DESC LIMIT 1',
+    );
     return results.isEmpty ? 0 : results.first['id'] + 1;
   }
 
   int getCurrentStepId() {
-    ResultSet results = _db
-      .select(
-        'SELECT progress_id FROM step ORDER BY progress_id DESC LIMIT 1',
-      );
+    ResultSet results = _db.select(
+      'SELECT progress_id FROM step ORDER BY progress_id DESC LIMIT 1',
+    );
     return results.isEmpty ? 0 : results.first['progress_id'];
   }
 
   int getCurrentValueProgressId() {
-    ResultSet results =  _db
-      .select(
-        'SELECT progress_id FROM value_progress ORDER BY progress_id DESC LIMIT 1',
-      );
+    ResultSet results = _db.select(
+      'SELECT progress_id FROM value_progress ORDER BY progress_id DESC LIMIT 1',
+    );
     return results.isEmpty ? 0 : results.first['progress_id'];
   }
 
   int getCurrentStepProgressId() {
-    ResultSet results =  _db
-      .select(
-        'SELECT progress_id FROM steps_progress ORDER BY progress_id DESC LIMIT 1',
-      );
+    ResultSet results = _db.select(
+      'SELECT progress_id FROM steps_progress ORDER BY progress_id DESC LIMIT 1',
+    );
     return results.isEmpty ? 0 : results.first['progress_id'];
   }
 
@@ -247,7 +243,6 @@ class AppDatabase {
   }
 
   updateStep({
-    required int stepId,
     required int progressId,
     required String label,
     required int value,
@@ -255,16 +250,13 @@ class AppDatabase {
   }) {
     _db.execute('''
     UPDATE step SET
-      progress_id = ?,
-      label = ?,
-      value = ?,
       is_done = ?
-    WHERE progress_id = ?
+    WHERE progress_id = ? AND label = ? AND value = ?
     ''', [
+      isDone,
       progressId,
       label,
       value,
-      isDone,
     ]);
   }
 

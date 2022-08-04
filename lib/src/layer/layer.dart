@@ -158,7 +158,6 @@ class DBLayer {
     );
     for (StepModel step in progress.steps) {
       await _db.updateStep(
-        stepId: step.progressId,
         progressId: progress.progressId,
         label: step.label,
         value: step.value,
